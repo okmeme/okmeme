@@ -7,15 +7,15 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.expand', function(e) {
-        $(this).removeClass("expand").addClass("contract");
-      
-        var  domelem = $(this).parent().next('.link');
-        var cuck = domelem.clone(true).empty().embedly().insertAfter(domelem);
+    $(this).removeClass("expand").addClass("contract");
+
+    var domelem = $(this).parent().next('.link');
+    var cuck = domelem.clone(true).empty().embedly().insertAfter(domelem);
   });
 
   $(document).on('click', '.contract', function(e) {
-        $(this).removeClass("contract").addClass("expand");
-        var  domelem = $(this).parent().next().next().remove();
+    $(this).removeClass("contract").addClass("expand");
+    var domelem = $(this).parent().next().next().remove();
   });
 
 });
