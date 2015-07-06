@@ -1,9 +1,4 @@
-
-$(document).ready(function() {
-  $(".commentsection").hide();
-    $(".commentlink").click(function() {
-  $(this).next(".commentsection").slideToggle(200);
-  console.log("clicked");
-  });
+$( document ).ready(function() {
+    console.log( "ready!" );
 });
 
