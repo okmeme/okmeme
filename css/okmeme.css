@@ -1,0 +1,22 @@
+ html * {
+  font-family: 'Lato', sans-serif;
+}
+body {
+  min-height: 2000px;
+  padding-top: 70px;'
+}
+.navbar-brand {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
+.list {
+}
+
+.commentsection {
+  /*display: none;*/
+}
