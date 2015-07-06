@@ -6,17 +6,16 @@ $(document).ready(function() {
     $(this).parent().parent().parent().next('.commentsection').slideToggle(200);
   });
 
-
-  $(".expand").click(function() {
-    if ($(this).parent().next(".embed").length) {
-      $(this).parent().next('.link').removeClass("hide");
-      $(this).parent().next(".embed").remove();
-      console.log("show link");
-    } else {
-      $(this).parent().next('.link').clone(true);
-        //.embedly();
-      $(this).parent().next('.link').addClass("hide");
-      console.log("embedly");
-    }
+  $(document).on('click', '.expand', function(e) {
+        $(this).removeClass("expand").addClass("contract");
+      
+        var  domelem = $(this).parent().next('.link');
+        var cuck = domelem.clone(true).empty().embedly().insertAfter(domelem);
   });
+
+  $(document).on('click', '.contract', function(e) {
+        $(this).removeClass("contract").addClass("expand");
+        var  domelem = $(this).parent().next().next().remove();
+  });
+
 });
