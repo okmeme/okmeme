@@ -10,6 +10,10 @@ body {
   font-style: italic;
 }
 
+.navbar {
+  height: 10px;
+}
+
 .navbar-static-top {
   margin-bottom: 19px;
 }
@@ -19,4 +23,8 @@ body {
 
 .commentsection {
   /*display: none;*/
+}
+
+.hide {
+  display: none;
 }

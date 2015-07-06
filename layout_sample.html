@@ -7,9 +7,9 @@
   <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic' rel='stylesheet' type='text/css'>
   <link href="css/okmeme.css" rel="stylesheet">
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="js/okmeme.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="//cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+  <script src="js/okmeme.js"></script>
 
 
   <title>OKME.ME | Home</title>
@@ -78,17 +78,33 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><button class="btn btn-success btn-xs"><i class="fa fa-chevron-up"></i></button> <a href="http://google.com/">wow look a link</a> by <a class="userlink">Adam</a>
-            <span class="pull-right">42 points | <a href="#" class="commentlink">69 Comments</a></span></h4>
+          <h4>
+            <div class="btn-group">
+              <button class="btn btn-success btn-xs vote"><i class="fa fa-chevron-up"></i></button>
+              <button class="btn btn-xs btn-primary expand"><i class="fa fa-expand"></i></button>
+            </div>&nbsp;
+            <a href="http://google.com/" class="link">wow look a link</a> | <a class="userlink">Adam</a>
+            <span class="pull-right">42 points | <a href="#" class="commentlink">69 Comments</a></span>
+          </h4>
         </div>
-        <div class="commentsection panel-body" id="1111">
+        <div class="commentsection panel-body">
           some comments
         </div>
       </div>
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">utube (planned to expand with embed later)</a> by <span class="user">Bob</span><span class="pull-right">0 points | <a href="#">0 Comments</a></span></h4>
+          <h4>
+            <div class="btn-group">
+              <button class="btn btn-success btn-xs vote"><i class="fa fa-chevron-up"></i></button>
+              <button class="btn btn-xs btn-primary expand"><i class="fa fa-expand"></i></button>
+            </div>&nbsp;
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="link">wow this is a sick song</a> | <a class="userlink">Richard</a>
+            <span class="pull-right">0 points | <a href="#" class="commentlink">0 Comments</a></span>
+          </h4>
+        </div>
+        <div class="commentsection panel-body">
+          no comments
         </div>
       </div>
 
