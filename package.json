@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material/top-app-bar": "^0.37.0",
+    "bootstrap": "^4.1.1",
     "history": "^4.7.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -11,6 +12,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.1.4",
+    "reactstrap": "^6.2.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.3.0"
@@ -20,9 +22,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.3"
   }
 }
