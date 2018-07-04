@@ -1,5 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed:700i');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+nav {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.navbar-brand {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.card {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.link {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.link-out {
+  padding-left: 5px;
 }
