@@ -68,6 +68,7 @@
     "normalize.css": "^8.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-timeago": "^4.4.0",
     "storm-react-diagrams": "^5.2.1"
   }
 }

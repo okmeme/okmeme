@@ -19,7 +19,6 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import InfoIcon from '@material-ui/icons/Info';
 import ShareIcon from '@material-ui/icons/Share';
 import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
@@ -37,14 +36,17 @@ import CakeIcon from '@material-ui/icons/Cake';
 import GradientIcon from '@material-ui/icons/Gradient';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PlaceIcon from '@material-ui/icons/Place';
+import KeyboardIcon from '@material-ui/icons/Keyboard';
+import Hidden from '@material-ui/core/Hidden';
 
 import jsxToString from 'jsx-to-string';
 
 import LinkCard from './LinkCard';
+import SidebarItem from './SidebarItem';
 
 /* global d3 */
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
@@ -76,7 +78,6 @@ const styles = theme => ({
     display: 'flex',
     flexGrow: 1,
     paddingTop: 64,
-    overflow: 'hidden',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -88,14 +89,14 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    overflow: 'hidden',
+    overflowX: 'hidden',
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    overflow: 'hidden',
+    overflowX: 'hidden',
     width: theme.spacing.unit * 7 + 1,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing.unit * 9 + 1,
@@ -152,7 +153,31 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     paddingLeft: 24
-  }
+  },
+  listItemLabel: {
+    fontWeight: 500,
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 10
+  },
+  link: {
+    color: 'black',
+    textDecoration: 'none',
+  },
+  loginButton: {
+    color: 'white',
+    paddingRight: 10,
+    marginRight: 10,
+  },
+  mediaPreview: {
+    height: 100
+  },
+  mediaFull: {
+    width: `calc(${window.innerWidth} - ${drawerWidth})`,
+    maxWidth: `calc(${window.innerWidth} - ${drawerWidth} - 30)`,
+    height: window.innerHeight,
+    maxHeight: window.innerHeight,
+  },
 });
 
 const theme = createMuiTheme({
@@ -206,11 +231,14 @@ class App extends Component {
             </IconButton>
             <Typography className={classes.barTitle} variant='h4'>OKMEME</Typography>
             
-            <div className={classes.grow}></div>  
+            <div className={classes.grow}></div>
+            <Hidden smDown>
+              <Button color='inherit' className={classes.loginButton}>
+                <InputIcon/>&nbsp;Login
+              </Button>
+            </Hidden>
           </Toolbar>
         </AppBar>
-
-
 
         <Drawer
           variant="permanent"
@@ -234,63 +262,38 @@ class App extends Component {
               </ListItem>
             </List>
           </div>
-          
           <List>
-          <ListItem button key='all' className={classes.listItem}>
-              <ListItemIcon><GradientIcon/></ListItemIcon>
-              <ListItemText>All</ListItemText>
-            </ListItem>
-            <ListItem button key='music' className={classes.listItem}>
-              <ListItemIcon><MusicNoteIcon/></ListItemIcon>
-              <ListItemText>Music</ListItemText>
-            </ListItem>
-            <ListItem button key='videos' className={classes.listItem}>
-              <ListItemIcon><MovieIcon/></ListItemIcon>
-              <ListItemText>Videos</ListItemText>
-            </ListItem>
-            <ListItem button key='pics' className={classes.listItem}>
-              <ListItemIcon><CameraAltIcon/></ListItemIcon>
-              <ListItemText>Pics</ListItemText>
-            </ListItem>
-            <ListItem button key='games' className={classes.listItem}>
-              <ListItemIcon><VideogameAsset/></ListItemIcon>
-              <ListItemText>Games</ListItemText>
-            </ListItem>
-            <ListItem button key='tech' className={classes.listItem}>
-              <ListItemIcon><DevicesIcon/></ListItemIcon>
-              <ListItemText>Tech</ListItemText>
-            </ListItem>
-            <ListItem button key='cars' className={classes.listItem}>
-              <ListItemIcon><DirectionsCarIcon/></ListItemIcon>
-              <ListItemText>Cars</ListItemText>
-            </ListItem>
-            <ListItem button key='outside' className={classes.listItem}>
-              <ListItemIcon><PlaceIcon/></ListItemIcon>
-              <ListItemText>Outside</ListItemText>
-            </ListItem>
-            <ListItem button key='shop' className={classes.listItem}>
-              <ListItemIcon><ShoppingCartIcon/></ListItemIcon>
-              <ListItemText>Shopping</ListItemText>
-            </ListItem>
-            <ListItem button key='memes' className={classes.listItem}>
-              <ListItemIcon><CakeIcon/></ListItemIcon>
-              <ListItemText>Memes</ListItemText>
-            </ListItem>
+            <SidebarItem classes={classes} label='All' Icon={GradientIcon} />
+            <Divider/>
+            <SidebarItem classes={classes} label='Music' Icon={MusicNoteIcon} tags={['Electronic', 'Chill', 'Classical', 'Rock']} />
+            <SidebarItem classes={classes} label='Videos' Icon={MovieIcon} tags={['YouTube', 'GFY', 'Other']} />
+            <SidebarItem classes={classes} label='Pics' Icon={CameraAltIcon} tags={['Imgur', 'Art', 'Instagram']} />
+            <SidebarItem classes={classes} label='Games' Icon={VideogameAsset} tags={['PC', 'XBOX', 'PlayStation', 'Nintendo', 'Mobile']} />
+            <SidebarItem classes={classes} label='Code' Icon={KeyboardIcon} tags={['Web', 'Python', 'Games']} />
+            <SidebarItem classes={classes} label='Tech' Icon={DevicesIcon} tags={['Computers', 'Phones', 'Gadgets', 'Wearables']} />
+            <SidebarItem classes={classes} label='Cars' Icon={DirectionsCarIcon} tags={['Four Wheels', 'Two Wheels']} />
+            <SidebarItem classes={classes} label='Outside' Icon={PlaceIcon} tags={['Camp', 'Hike', 'Run']} />
+            <SidebarItem classes={classes} label='Shopping' Icon={ShoppingCartIcon} tags={['Deals', 'Parts']} />
+            <SidebarItem classes={classes} label='Memes' Icon={CakeIcon} tags={['.jpg', '.gif', '.mp4']} />
+            <Hidden smUp>
+              {/* TODO FIGURE OUT WHY THIS DOESN'T WORK */}
+              <Divider/>
+              <SidebarItem classes={classes} label='Login' Icon={InputIcon} />
+            </Hidden>
           </List>
-            
-          <Divider/>
+
         </Drawer>
         <main className={classes.content}>
 
           <List className={classes.cardList}>
-            <LinkCard classes={classes} media='' title='lizard and really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf' tags={['a', 'b', 'c']} author='bob'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} media='' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='12' timestamp='1553239282400' Icon={CakeIcon} title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
+            <LinkCard classes={classes} points='23' link='https://okme.me' timestamp='1553238236670' Icon={MusicNoteIcon} title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' Icon={CameraAltIcon} title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='0' link='#' timestamp='1553238236670' Icon={KeyboardIcon} title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' Icon={ShoppingCartIcon} title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='42' media='' link='#' timestamp='1551038236670' Icon={KeyboardIcon} title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} points='42' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
+            <LinkCard classes={classes} points='42' link='#' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
             
           </List>
 
