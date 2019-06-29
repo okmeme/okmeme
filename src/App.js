@@ -12,19 +12,10 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import InfoIcon from '@material-ui/icons/Info';
-import ShareIcon from '@material-ui/icons/Share';
-import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import InputIcon from '@material-ui/icons/Input';
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
-import DeleteIcon from '@material-ui/icons/Delete';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import MovieIcon from '@material-ui/icons/Movie';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
@@ -39,12 +30,8 @@ import PlaceIcon from '@material-ui/icons/Place';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import Hidden from '@material-ui/core/Hidden';
 
-import jsxToString from 'jsx-to-string';
-
-import LinkCard from './LinkCard';
-import SidebarItem from './SidebarItem';
-
-/* global d3 */
+import LinkCard from './components/LinkCard';
+import SidebarItem from './components/SidebarItem';
 
 const drawerWidth = 240;
 
@@ -97,9 +84,9 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing.unit * 7 + 1,
+    width: theme.spacing(7) + 1,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9 + 1,
+      width: theme.spacing(9) + 1,
     },
   },
   barTitle: {
@@ -127,15 +114,15 @@ const styles = theme => ({
     marginRight: 0
   },
   paper: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
     display: 'flex',
   },
   fab: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
-  
+
   label: {
     paddingLeft: 10,
   },
@@ -158,7 +145,7 @@ const styles = theme => ({
     fontWeight: 500,
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 10
+    paddingLeft: theme.spacing(10)
   },
   link: {
     color: 'black',
@@ -210,27 +197,28 @@ class App extends Component {
 
   render() {
     const {classes} = this.props;
-    
+
     return <div className={classes.root}>
       <CssBaseline/>
       <MuiThemeProvider theme={theme}>
         <AppBar position="fixed" className={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open,
-          })}>
+          [classes.appBarShift]: this.state.open,
+        })}>
+
           <Toolbar disableGutters={true} >
             <IconButton onClick={this.handleDrawerClose} className={classNames(classes.menuButton, {[classes.hide]: !this.state.open})}>
               <ChevronLeftIcon />
             </IconButton>
             <IconButton color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, {
-                [classes.hide]: this.state.open,
-              })}>
+                        aria-label="Open drawer"
+                        onClick={this.handleDrawerOpen}
+                        className={classNames(classes.menuButton, {
+                          [classes.hide]: this.state.open,
+                        })}>
               <MenuIcon/>
             </IconButton>
             <Typography className={classes.barTitle} variant='h4'>OKMEME</Typography>
-            
+
             <div className={classes.grow}></div>
             <Hidden smDown>
               <Button color='inherit' className={classes.loginButton}>
@@ -294,14 +282,13 @@ class App extends Component {
             <LinkCard classes={classes} points='42' media='' link='#' timestamp='1551038236670' Icon={KeyboardIcon} title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
             <LinkCard classes={classes} points='42' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
             <LinkCard classes={classes} points='42' link='#' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            
+
           </List>
 
         </main>
       </MuiThemeProvider>
     </div>;
   }
-
 }
 
 App.propTypes = {

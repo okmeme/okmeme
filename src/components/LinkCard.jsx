@@ -42,7 +42,7 @@ class LinkCard extends React.Component {
           </CardContent>
         :
           <CardContent>
-            <a href={link} target='_blank' className={classes.link}>
+            <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
               <Typography variant="h5" component="h2">
               {title}&nbsp;<OpenInNewIcon color="primary"/>
               </Typography>
