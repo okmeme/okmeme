@@ -3,37 +3,35 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Collapse } from '@material-ui/core';
 
-class SidebarItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { open : false };
+export function SidebarItem(props) {
+  const { classes, label, Icon, tags } = props;
+  const [open, setOpen] = React.useState(false);
+
+  function handleClick(event, value) {
+    setOpen(open => !open);
   }
 
-  handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
-  };
-
-  render() {
-    const {classes, label, Icon, tags} = this.props;
-    return (
-      <React.Fragment>
-        { !tags ? 
-          <ListItem button key={label} className={classes.listItem}>
-            <ListItemIcon><Icon/></ListItemIcon>
-            <ListItemText>{label}</ListItemText>
-          </ListItem>
+  return (
+    <React.Fragment>
+      { !tags ?
+        <ListItem button key={label} className={classes.listItem}>
+          <ListItemIcon><Icon /></ListItemIcon>
+          <ListItemText>{label}</ListItemText>
+        </ListItem>
         :
         <React.Fragment>
-          <ListItem button key={label} className={classes.listItem} onClick={this.handleClick}>
-            <ListItemIcon><Icon/></ListItemIcon>
+          <ListItem button key={label} className={classes.listItem} onClick={handleClick}>
+            <ListItemIcon><Icon /></ListItemIcon>
             <ListItemText className={classes.listItemLabel}>{label}</ListItemText>
           </ListItem>
-          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout="auto" unmountOnExit>
             <List component='div' disablePadding>
-              {tags.map((tag, index) =>(
+              {tags.map((tag, index) => (
                 <ListItem button key={tag} className={classes.nested}>
+                  <ListItemIcon><ArrowForwardIosIcon /></ListItemIcon>
                   <ListItemText size="small">{tag}</ListItemText>
                 </ListItem>
               ))
@@ -41,11 +39,10 @@ class SidebarItem extends React.Component {
             </List>
           </Collapse>
         </React.Fragment>
-        }
-        
-      </React.Fragment>
-    );
-  }
+      }
+
+    </React.Fragment>
+  );
 }
 
 export default SidebarItem;

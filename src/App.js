@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles, MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,7 +12,8 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
+
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
@@ -28,10 +29,14 @@ import GradientIcon from '@material-ui/icons/Gradient';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PlaceIcon from '@material-ui/icons/Place';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
-import Hidden from '@material-ui/core/Hidden';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
 
 import LinkCard from './components/LinkCard';
 import SidebarItem from './components/SidebarItem';
+import SubmitPanel from './components/SubmitPanel';
+import LoginPanel from './components/LoginPanel';
+import AdminPanel from './components/AdminPanel';
 
 const drawerWidth = 240;
 
@@ -145,13 +150,13 @@ const styles = theme => ({
     fontWeight: 500,
   },
   nested: {
-    paddingLeft: theme.spacing(10)
+    paddingLeft: theme.spacing(4)
   },
   link: {
     color: 'black',
     textDecoration: 'none',
   },
-  loginButton: {
+  navbarButton: {
     color: 'white',
     paddingRight: 10,
     marginRight: 10,
@@ -178,42 +183,32 @@ const theme = createMuiTheme({
   }
 });
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+export function App(props) {
+  const {classes} = props;
 
-    this.state = {
-      open : true,
-    };
+  const [open, setOpen] = React.useState(true);
+
+  function handleDrawer(event, value) {
+    setOpen(open => !open)
   }
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
-  render() {
-    const {classes} = this.props;
-
-    return <div className={classes.root}>
+  
+  return(
+    <div className={classes.root}>
       <CssBaseline/>
       <MuiThemeProvider theme={theme}>
         <AppBar position="fixed" className={classNames(classes.appBar, {
-          [classes.appBarShift]: this.state.open,
+          [classes.appBarShift]: open,
         })}>
 
           <Toolbar disableGutters={true} >
-            <IconButton onClick={this.handleDrawerClose} className={classNames(classes.menuButton, {[classes.hide]: !this.state.open})}>
+            <IconButton onClick={handleDrawer} className={classNames(classes.menuButton, {[classes.hide]: !open})}>
               <ChevronLeftIcon />
             </IconButton>
             <IconButton color="inherit"
                         aria-label="Open drawer"
-                        onClick={this.handleDrawerOpen}
+                        onClick={handleDrawer}
                         className={classNames(classes.menuButton, {
-                          [classes.hide]: this.state.open,
+                          [classes.hide]: open,
                         })}>
               <MenuIcon/>
             </IconButton>
@@ -221,9 +216,8 @@ class App extends Component {
 
             <div className={classes.grow}></div>
             <Hidden smDown>
-              <Button color='inherit' className={classes.loginButton}>
-                <InputIcon/>&nbsp;Login
-              </Button>
+              <SubmitPanel/>
+              <LoginPanel/>
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -231,20 +225,20 @@ class App extends Component {
         <Drawer
           variant="permanent"
           className={classNames(classes.drawer, {
-            [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open,
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
           })}
           classes={{
             paper: classNames({
-              [classes.drawerOpen]: this.state.open,
-              [classes.drawerClose]: !this.state.open,
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
             }),
           }}
-          open={this.state.open}
+          open={open}
         >
           <div className={classes.toolbar}>
             <List>
-              <ListItem button key='nav' onClick={this.handleDrawerClose}>
+              <ListItem button key='nav' onClick={handleDrawer}>
                 <ListItemIcon><MenuIcon/></ListItemIcon>
                 <ListItemText>Navigation</ListItemText>
               </ListItem>
@@ -262,17 +256,21 @@ class App extends Component {
             <SidebarItem classes={classes} label='Cars' Icon={DirectionsCarIcon} tags={['Four Wheels', 'Two Wheels']} />
             <SidebarItem classes={classes} label='Outside' Icon={PlaceIcon} tags={['Camp', 'Hike', 'Run']} />
             <SidebarItem classes={classes} label='Shopping' Icon={ShoppingCartIcon} tags={['Deals', 'Parts']} />
+            <SidebarItem classes={classes} label='Food' Icon={FastfoodIcon} tags={['Recipes', 'Videos']} />
             <SidebarItem classes={classes} label='Memes' Icon={CakeIcon} tags={['.jpg', '.gif', '.mp4']} />
             <Hidden smUp>
               {/* TODO FIGURE OUT WHY THIS DOESN'T WORK */}
               <Divider/>
+              <SidebarItem classes={classes} label='Submit' Icon={AddBoxIcon} />
               <SidebarItem classes={classes} label='Login' Icon={InputIcon} />
             </Hidden>
+            {/* hide if not staff */}
+            <Divider/>
+            <AdminPanel />
           </List>
 
         </Drawer>
         <main className={classes.content}>
-
           <List className={classes.cardList}>
             <LinkCard classes={classes} points='12' timestamp='1553239282400' Icon={CakeIcon} title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
             <LinkCard classes={classes} points='23' link='https://okme.me' timestamp='1553238236670' Icon={MusicNoteIcon} title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
@@ -287,12 +285,12 @@ class App extends Component {
 
         </main>
       </MuiThemeProvider>
-    </div>;
-  }
+    </div>
+  );
 }
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(App);
+export default (withStyles(styles)(App));

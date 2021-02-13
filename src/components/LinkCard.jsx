@@ -6,104 +6,108 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Hidden from '@material-ui/core/Hidden';
+import TimeAgo from 'react-timeago';
+import Tooltip from '@material-ui/core/Tooltip';
+
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ChatIcon from '@material-ui/icons/Chat';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import Hidden from '@material-ui/core/Hidden';
-import TimeAgo from 'react-timeago';
-import Tooltip from '@material-ui/core/Tooltip';
+import ReportIcon from '@material-ui/icons/Report';
 
-class LinkCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { mediaPreview : false, textPreview : true };
+export function LinkCard(props) {
+  const [mediaPreview, setMediaPreview] = React.useState(false);
+  const [textPreview, setTextPreview] = React.useState(false);
+
+  function handleMediaClick(event, value) {
+    setMediaPreview(mediaPreview => !mediaPreview);
   }
 
-  handleMediaClick = () => {
-    this.setState(state => ({ mediaPreview: !state.mediaPreview }));
-  };
+  function handleTextClick(event, value) {
+    setTextPreview(textPreview => !textPreview);
+  }
 
-  handleTextClick = () => {
-    this.setState(state => ({ textPreview: !state.textPreview }));
-  };
+  const { classes, media, link, title, Icon, tags, points, author, timestamp, text } = props;
 
-  render() {
-    const {classes, media, link, title, Icon, tags, points, author, timestamp, text} = this.props;
-    return (
+  return (
+    <React.Fragment>
       <Card className={classes.card}>
-      <CardActionArea onClick={!text ? null : this.handleTextClick}>
-        {!link ?
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              {title}&nbsp;<ChatIcon color="primary"/>
-            </Typography>
-          </CardContent>
-        :
-          <CardContent>
-            <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
+        <CardActionArea onClick={!text ? null : handleTextClick}>
+          {!link ?
+            <CardContent>
               <Typography variant="h5" component="h2">
-              {title}&nbsp;<OpenInNewIcon color="primary"/>
+                {title}&nbsp;<ChatIcon color="primary" />
               </Typography>
-            </a>
-          </CardContent>
-        }
-        {!media ? null :
+            </CardContent>
+            :
+            <CardContent>
+              <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
+                <Typography variant="h5" component="h2">
+                  {title}&nbsp;<OpenInNewIcon color="primary" />
+                </Typography>
+              </a>
+            </CardContent>
+          }
+          {!media ? null :
+            <Hidden xsDown>
+              <CardMedia
+                className={mediaPreview ? classes.mediaFull : classes.mediaPreview}
+                image={media}
+                title={title}
+                onClick={handleMediaClick}
+              />
+            </Hidden>
+          }
+          {!text ? null :
+            <CardContent>
+              {!textPreview ?
+                <Typography variant="body1">{({ text }.text).substring(0, 64) + '...'}&nbsp;<AddCircleIcon /></Typography>
+                :
+                <Typography variant="body1">{text}&nbsp;<RemoveCircleIcon /></Typography>
+              }
+            </CardContent>
+          }
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary">
+            <ExpandLessIcon />&nbsp;{points > 0 ? points : null}
+          </Button>
+          <Button size="small" color="primary">
+            {/* hide icon if all view */}
+            <Icon />
+          </Button>
+          <Button size="small" color="secondary">
+            {/* hide name if not logged in */}
+            {author}
+          </Button>
           <Hidden xsDown>
-            <CardMedia
-              className={this.state.mediaPreview ? classes.mediaFull : classes.mediaPreview}
-              image={media}
-              title={title}
-              onClick={this.handleMediaClick}
-            />
-          </Hidden>
-        }
-        {!text ? null :
-          <CardContent>
-            {this.state.textPreview ?
-              <Typography variant="body1">{({text}.text).substring(0, 64) + '...'}&nbsp;<AddCircleIcon/></Typography>
-              :
-              <Typography variant="body1">{text}&nbsp;<RemoveCircleIcon/></Typography>
-            }
-          </CardContent>
-        }
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          <ExpandLessIcon />&nbsp;{points > 0 ? points : null}
-        </Button>
-        <Button size="small" color="primary">
-          {/* hide icon if all view */}
-          <Icon/>
-        </Button>
-        <Button size="small" color="secondary">
-          {/* hide name if not logged in */}
-          {author}
-        </Button>
-        <Hidden xsDown>
-          <Tooltip title={(new Date(parseInt({timestamp}.timestamp)).toISOString())}>
-            <Button size="small" color="primary">
-              <TimeAgo date={parseInt(timestamp)} title=''/>
-            </Button>
-          </Tooltip>
-        </Hidden>
-        <Hidden smDown>
-          <Typography variant='body1'>|</Typography>
-          <div className={classes.tags}>
-            {tags.map((tag, index) => (
-              <Button size="small" color="primary" key={title+tag+index}>
-              #{tag}
+            <Tooltip title={(new Date(parseInt({ timestamp }.timestamp)).toISOString())}>
+              <Button size="small" color="primary">
+                <TimeAgo date={parseInt(timestamp)} title='' />
               </Button>
-            ))
-            }
-          </div>
-        </Hidden>
-        <div className={classes.grow}></div>
-      </CardActions>
-    </Card>
-    );
-  }
+            </Tooltip>
+          </Hidden>
+          <Hidden smDown>
+            <Typography variant='body1'>|</Typography>
+            <div className={classes.tags}>
+              {tags.map((tag, index) => (
+                <Button size="small" color="primary" key={title + tag + index}>
+                  #{tag}
+                </Button>
+              ))
+              }
+            </div>
+          </Hidden>
+          <div className={classes.grow}></div>
+          <Button size="small" color="primary">
+            <ReportIcon />
+          </Button>
+        </CardActions>
+      </Card>
+    </React.Fragment>
+  );
 }
 
 export default LinkCard;
