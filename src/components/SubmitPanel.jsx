@@ -10,7 +10,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core';
+import { ListItemIcon, withStyles } from '@material-ui/core';
 
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
@@ -23,19 +23,32 @@ const styles = theme => ({
     paddingRight: 10,
     marginRight: 10,
   },
-  typePadding: {
-    padding: theme.spacing(2),
-  },
-  buttonText: {
-    paddingLeft: 10,
-  },
+  selector: {
+    '& .MuiListItemIcon-root': {
+      marginLeft: theme.spacing(3),
+      marginRight: theme.spacing(0)
+    }
+  }
 });
+
+const visibilityTypes = [
+  'Public', 'Verified Only', 'Staff Only'
+]
+
+const submitterTypes = [
+  'As Yourself', 'As Verified', 'As Staff'
+]
 
 export function SubmitPanel(props) {
 
-  const { classes, mediaType, linkType, tags, url, text, visibleType, submitterType, nsfw } = props;
+  const { classes, mediaTypes, categoryTypes, linkType, tags, url, text, visibleType, submitterType, nsfw } = props;
 
   const [open, setOpen] = React.useState(false)
+  const [mediaType, setMediaType] = React.useState(mediaTypes[3])
+
+  function handleMediaType(event, value) {
+    setMediaType(mediaType => value);
+  }
 
   function handleModalOpen() {
     setOpen(open => true);
@@ -44,22 +57,6 @@ export function SubmitPanel(props) {
   function handleModalClose() {
     setOpen(open => false);
   }
-
-  const categoryTypes = [
-    'Music', 'Videos', 'Pics', 'Games', 'Code', 'Tech', 'Cars', 'Outside', 'Shopping', 'Food', 'Memes'
-  ]
-
-  const mediaTypes = [
-    'Image', 'Video', 'Audio', 'URL', 'Text'
-  ]
-
-  const visibilityTypes = [
-    'Public', 'Verified Only', 'Staff Only'
-  ]
-
-  const submitterTypes = [
-    'As Yourself', 'As Verified', 'As Staff'
-  ]
 
   return (
     <React.Fragment>
@@ -75,70 +72,47 @@ export function SubmitPanel(props) {
       >
         <DialogTitle>Submit a post</DialogTitle>
         <DialogContent>
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="baseline"
-            spacing={2}
-            className={classes.grid}
+
+          <TextField
+            id="select-media-type"
+            select
+            fullWidth
+            label="Media Type"
+            onChange={handleMediaType}
+            className={classes.selector}
+            value={mediaType}
+            SelectProps={{
+              MenuProps: {
+                className: classes.menu,
+              },
+            }}
+            helperText="Select Media Type"
+            margin="normal"
           >
-            <TextField
-              id="select-media-type"
-              select
-              label=""
-              className={classes.typePadding}
-              value={mediaType}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Select Media Type"
-              margin="normal"
-            >
-              {mediaTypes.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="select-category"
-              select
-              label=""
-              className={classes.typePadding}
-              value={linkType}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              helperText="Select Category"
-              margin="normal"
-            >
-              {categoryTypes.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-            {/* type and autosuggest existing ones in category or add a new one  */}
-            <TextField
-              id="tags"
-              label=""
-              className={classes.typePadding}
-              helperText="Enter some tags"
-            >
-            </TextField>
-          </Grid>
+            {mediaTypes.map(option => (
+              <MenuItem key={option.name} value={option}>
+                <ListItemIcon>
+                  {option.icon}
+                </ListItemIcon>
+                {option.name}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <TextField
             id="title"
             label="Title goes here"
-            fullWidth
             className={classes.textField}
+            fullWidth
             helperText="Enter a descriptive title or whatever"
+          />
+          {/* type and autosuggest existing ones in category or add a new one  */}
+          <TextField
+            id="tags"
+            label="Tagging"
+            className={classes.textField}
+            helperText="Enter some tags"
+            fullWidth
           />
 
           {/* changes based on link type */}
@@ -150,14 +124,14 @@ export function SubmitPanel(props) {
                */}
           <TextField
             id="link"
-            label="Link Post"
+            label="Link"
             fullWidth
             className={classes.textField}
             helperText="Enter URL"
           />
           <TextField
             id="text"
-            label="Text Post"
+            label="Text"
             fullWidth
             multiline
             className={classes.textField}
@@ -165,7 +139,7 @@ export function SubmitPanel(props) {
           />
 
           {/* highest visibility available based on role */}
-          <Grid
+          {/* <Grid
             container
             direction="row"
             justify="flex-start"
@@ -192,10 +166,10 @@ export function SubmitPanel(props) {
                   {option}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> */}
 
-            {/* highest visibility available based on role */}
-            <TextField
+          {/* highest visibility available based on role */}
+          {/* <TextField
               id="select-submit-visibility"
               select
               label=""
@@ -215,7 +189,7 @@ export function SubmitPanel(props) {
                 </MenuItem>
               ))}
             </TextField>
-          </Grid>
+          </Grid> */}
           {/* NSFW on auto defaults to post visibility verified only or higher if not already selected */}
           <FormGroup row>
             <FormControlLabel

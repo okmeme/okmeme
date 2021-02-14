@@ -11,8 +11,6 @@ import TimeAgo from 'react-timeago';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import ChatIcon from '@material-ui/icons/Chat';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ReportIcon from '@material-ui/icons/Report';
@@ -29,7 +27,7 @@ export function LinkCard(props) {
     setTextPreview(textPreview => !textPreview);
   }
 
-  const { classes, media, link, title, Icon, tags, points, author, timestamp, text } = props;
+  const { classes, mediaType, categoryType, media, link, title, tags, points, author, timestamp, text } = props;
 
   return (
     <React.Fragment>
@@ -38,14 +36,14 @@ export function LinkCard(props) {
           {!link ?
             <CardContent>
               <Typography variant="h5" component="h2">
-                {title}&nbsp;<ChatIcon color="primary" />
+                {title}&nbsp;{mediaType.icon}
               </Typography>
             </CardContent>
             :
             <CardContent>
               <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
                 <Typography variant="h5" component="h2">
-                  {title}&nbsp;<OpenInNewIcon color="primary" />
+                  {title}&nbsp;{mediaType.icon}
                 </Typography>
               </a>
             </CardContent>
@@ -73,10 +71,6 @@ export function LinkCard(props) {
         <CardActions>
           <Button size="small" color="primary">
             <ExpandLessIcon />&nbsp;{points > 0 ? points : null}
-          </Button>
-          <Button size="small" color="primary">
-            {/* hide icon if all view */}
-            <Icon />
           </Button>
           <Button size="small" color="secondary">
             {/* hide name if not logged in */}

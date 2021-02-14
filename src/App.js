@@ -31,6 +31,10 @@ import PlaceIcon from '@material-ui/icons/Place';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
+import PhotoIcon from '@material-ui/icons/Photo';
+import AudiotrackIcon from '@material-ui/icons/Audiotrack';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import ChatIcon from '@material-ui/icons/Chat';
 
 import LinkCard from './components/LinkCard';
 import SidebarItem from './components/SidebarItem';
@@ -183,6 +187,90 @@ const theme = createMuiTheme({
   }
 });
 
+const categoryTypes = [
+  {
+    name: 'All',
+    icon: <GradientIcon />
+  },
+  {
+    name: 'Music',
+    icon: <MusicNoteIcon />
+  },
+  {
+    name: 'Videos',
+    icon: <MovieIcon />
+  },
+  {
+    name: 'Pics',
+    icon: <CameraAltIcon />
+  },
+  {
+    name: 'Games',
+    icon: <VideogameAsset />
+  },
+  {
+    name: 'Code',
+    icon: <KeyboardIcon />
+  },
+  {
+    name: 'Tech',
+    icon: <DevicesIcon />
+  },
+  {
+    name: 'Cars',
+    icon: <DirectionsCarIcon />
+  },
+  {
+    name: 'Outside',
+    icon: <PlaceIcon />
+  },
+  {
+    name: 'Shopping',
+    icon: <ShoppingCartIcon />
+  },
+  {
+    name: 'Food',
+    icon: <FastfoodIcon />
+  },
+  {
+    name: 'Memes',
+    icon: <CakeIcon />
+  },
+]
+
+const extraButtons = [
+  {
+    name: 'Submit',
+    icon: <AddBoxIcon />
+  },
+  {
+    name: 'Login',
+    icon: <InputIcon />
+  }
+]
+
+const mediaTypes = [
+  {
+    name: 'Image',
+    icon: <PhotoIcon />
+  },
+  {
+    name: 'Video',
+    icon: <MovieIcon />
+  }, {
+    name: 'Audio',
+    icon: <AudiotrackIcon />
+  }, 
+  {
+    name: 'URL',
+    icon: <OpenInNewIcon />
+  },
+  {
+    name: 'Text',
+    icon: <ChatIcon />
+  }
+]
+
 export function App(props) {
   const {classes} = props;
 
@@ -216,7 +304,7 @@ export function App(props) {
 
             <div className={classes.grow}></div>
             <Hidden smDown>
-              <SubmitPanel/>
+              <SubmitPanel categoryTypes={categoryTypes} mediaTypes={mediaTypes}/>
               <LoginPanel/>
             </Hidden>
           </Toolbar>
@@ -245,24 +333,24 @@ export function App(props) {
             </List>
           </div>
           <List>
-            <SidebarItem classes={classes} label='All' Icon={GradientIcon} />
+            <SidebarItem classes={classes} item={categoryTypes[0]} />
             <Divider/>
-            <SidebarItem classes={classes} label='Music' Icon={MusicNoteIcon} tags={['Electronic', 'Chill', 'Classical', 'Rock']} />
-            <SidebarItem classes={classes} label='Videos' Icon={MovieIcon} tags={['YouTube', 'GFY', 'Other']} />
-            <SidebarItem classes={classes} label='Pics' Icon={CameraAltIcon} tags={['Imgur', 'Art', 'Instagram']} />
-            <SidebarItem classes={classes} label='Games' Icon={VideogameAsset} tags={['PC', 'XBOX', 'PlayStation', 'Nintendo', 'Mobile']} />
-            <SidebarItem classes={classes} label='Code' Icon={KeyboardIcon} tags={['Web', 'Python', 'Games']} />
-            <SidebarItem classes={classes} label='Tech' Icon={DevicesIcon} tags={['Computers', 'Phones', 'Gadgets', 'Wearables']} />
-            <SidebarItem classes={classes} label='Cars' Icon={DirectionsCarIcon} tags={['Four Wheels', 'Two Wheels']} />
-            <SidebarItem classes={classes} label='Outside' Icon={PlaceIcon} tags={['Camp', 'Hike', 'Run']} />
-            <SidebarItem classes={classes} label='Shopping' Icon={ShoppingCartIcon} tags={['Deals', 'Parts']} />
-            <SidebarItem classes={classes} label='Food' Icon={FastfoodIcon} tags={['Recipes', 'Videos']} />
-            <SidebarItem classes={classes} label='Memes' Icon={CakeIcon} tags={['.jpg', '.gif', '.mp4']} />
+            <SidebarItem classes={classes} item={categoryTypes[1]} tags={['Electronic', 'Chill', 'Classical', 'Rock']} />
+            <SidebarItem classes={classes} item={categoryTypes[2]} tags={['YouTube', 'GFY', 'Other']} />
+            <SidebarItem classes={classes} item={categoryTypes[3]} tags={['Imgur', 'Art', 'Instagram']} />
+            <SidebarItem classes={classes} item={categoryTypes[4]} tags={['PC', 'XBOX', 'PlayStation', 'Nintendo', 'Mobile']} />
+            <SidebarItem classes={classes} item={categoryTypes[5]} tags={['Web', 'Python', 'Games']} />
+            <SidebarItem classes={classes} item={categoryTypes[6]} tags={['Computers', 'Phones', 'Gadgets', 'Wearables']} />
+            <SidebarItem classes={classes} item={categoryTypes[7]} tags={['Four Wheels', 'Two Wheels']} />
+            <SidebarItem classes={classes} item={categoryTypes[8]} tags={['Camp', 'Hike', 'Run']} />
+            <SidebarItem classes={classes} item={categoryTypes[9]} tags={['Deals', 'Parts']} />
+            <SidebarItem classes={classes} item={categoryTypes[10]} tags={['Recipes', 'Videos']} />
+            <SidebarItem classes={classes} item={categoryTypes[11]} tags={['.jpg', '.gif', '.mp4']} />
             <Hidden smUp>
               {/* TODO FIGURE OUT WHY THIS DOESN'T WORK */}
               <Divider/>
-              <SidebarItem classes={classes} label='Submit' Icon={AddBoxIcon} />
-              <SidebarItem classes={classes} label='Login' Icon={InputIcon} />
+              <SidebarItem classes={classes} item={extraButtons[0]} />
+              <SidebarItem classes={classes} item={extraButtons[1]} />
             </Hidden>
             {/* hide if not staff */}
             <Divider/>
@@ -272,14 +360,14 @@ export function App(props) {
         </Drawer>
         <main className={classes.content}>
           <List className={classes.cardList}>
-            <LinkCard classes={classes} points='12' timestamp='1553239282400' Icon={CakeIcon} title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
-            <LinkCard classes={classes} points='23' link='https://okme.me' timestamp='1553238236670' Icon={MusicNoteIcon} title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' Icon={CameraAltIcon} title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} points='0' link='#' timestamp='1553238236670' Icon={KeyboardIcon} title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' Icon={ShoppingCartIcon} title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} points='42' media='' link='#' timestamp='1551038236670' Icon={KeyboardIcon} title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} points='42' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
-            <LinkCard classes={classes} points='42' link='#' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='12' timestamp='1553239282400' Icon={CakeIcon} title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='23' link='https://okme.me' timestamp='1553238236670' Icon={MusicNoteIcon} title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' Icon={CameraAltIcon} title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='0' link='#' timestamp='1553238236670' Icon={KeyboardIcon} title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' Icon={ShoppingCartIcon} title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='42' media='' link='#' timestamp='1551038236670' Icon={KeyboardIcon} title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='42' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='42' link='#' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
 
           </List>
 

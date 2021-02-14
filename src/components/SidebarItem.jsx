@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Collapse } from '@material-ui/core';
 
 export function SidebarItem(props) {
-  const { classes, label, Icon, tags } = props;
+  const { classes, item, tags } = props;
   const [open, setOpen] = React.useState(false);
 
   function handleClick(event, value) {
@@ -17,15 +17,15 @@ export function SidebarItem(props) {
   return (
     <React.Fragment>
       { !tags ?
-        <ListItem button key={label} className={classes.listItem}>
-          <ListItemIcon><Icon /></ListItemIcon>
-          <ListItemText>{label}</ListItemText>
+        <ListItem button key={item.name} className={classes.listItem}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText>{item.name}</ListItemText>
         </ListItem>
         :
         <React.Fragment>
-          <ListItem button key={label} className={classes.listItem} onClick={handleClick}>
-            <ListItemIcon><Icon /></ListItemIcon>
-            <ListItemText className={classes.listItemLabel}>{label}</ListItemText>
+          <ListItem button key={item.name} className={classes.listItem} onClick={handleClick}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText className={classes.listItemLabel}>{item.name}</ListItemText>
           </ListItem>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component='div' disablePadding>
