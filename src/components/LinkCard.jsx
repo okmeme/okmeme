@@ -15,36 +15,50 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ReportIcon from '@material-ui/icons/Report';
 
+function getHostname(url) {
+  return new URL(url).host;
+}
+
 export function LinkCard(props) {
   const [mediaPreview, setMediaPreview] = React.useState(false);
   const [textPreview, setTextPreview] = React.useState(false);
 
   function handleMediaClick(event, value) {
-    setMediaPreview(mediaPreview => !mediaPreview);
+    setMediaPreview(!mediaPreview);
   }
 
   function handleTextClick(event, value) {
-    setTextPreview(textPreview => !textPreview);
+    setTextPreview(!textPreview);
   }
 
   const { classes, mediaType, categoryType, media, link, title, tags, points, author, timestamp, text } = props;
+
+  let shortLink = 'text';
+  if (link !== '#') {
+    shortLink = getHostname(link)
+  } else {
+    shortLink = 'text'
+  }
 
   return (
     <React.Fragment>
       <Card className={classes.card}>
         <CardActionArea onClick={!text ? null : handleTextClick}>
-          {!link ?
+          {link === '#' ?
             <CardContent>
               <Typography variant="h5" component="h2">
-                {title}&nbsp;{mediaType.icon}
+                {mediaType.icon}&nbsp;{title}
               </Typography>
             </CardContent>
             :
             <CardContent>
               <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
                 <Typography variant="h5" component="h2">
-                  {title}&nbsp;{mediaType.icon}
+                  {mediaType.icon}&nbsp;{title} <Typography variant="overline">{shortLink}</Typography>
                 </Typography>
+
+
+
               </a>
             </CardContent>
           }

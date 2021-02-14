@@ -10,26 +10,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
-import { ListItemIcon, withStyles } from '@material-ui/core';
+import ListItemIcon from '@material-ui/core/ListItem';
 
-import AddBoxIcon from '@material-ui/icons/AddBox';
-
-const styles = theme => ({
-  grid: {
-    flexGrow: 1,
-  },
-  navbarButton: {
-    color: 'white',
-    paddingRight: 10,
-    marginRight: 10,
-  },
-  selector: {
-    '& .MuiListItemIcon-root': {
-      marginLeft: theme.spacing(3),
-      marginRight: theme.spacing(0)
-    }
-  }
-});
 
 const visibilityTypes = [
   'Public', 'Verified Only', 'Staff Only'
@@ -41,36 +23,24 @@ const submitterTypes = [
 
 export function SubmitPanel(props) {
 
-  const { classes, mediaTypes, categoryTypes, linkType, tags, url, text, visibleType, submitterType, nsfw } = props;
+  const { classes, handleModalClose, open, mediaTypes, linkType, tags, url, text, nsfw } = props;
 
-  const [open, setOpen] = React.useState(false)
-  const [mediaType, setMediaType] = React.useState(mediaTypes[3])
+  // const [open, setOpen] = React.useState(false)
+  const [mediaType, setMediaType] = React.useState(mediaTypes[3].name)
 
   function handleMediaType(event, value) {
-    setMediaType(mediaType => value);
-  }
-
-  function handleModalOpen() {
-    setOpen(open => true);
-  }
-
-  function handleModalClose() {
-    setOpen(open => false);
+    setMediaType(value);
   }
 
   return (
     <React.Fragment>
-      <Button color='inherit' className={classes.navbarButton} onClick={handleModalOpen}>
-        <AddBoxIcon />
-        <span className={classes.buttonText}>Submit</span>
-      </Button>
       <Dialog
         className={classes.modal}
         open={open}
         onClose={handleModalClose}
         id='modal'
       >
-        <DialogTitle>Submit a post</DialogTitle>
+        <DialogTitle>Submit a link</DialogTitle>
         <DialogContent>
 
           <TextField
@@ -90,7 +60,7 @@ export function SubmitPanel(props) {
             margin="normal"
           >
             {mediaTypes.map(option => (
-              <MenuItem key={option.name} value={option}>
+              <MenuItem key={option.name} value={option.name}>
                 <ListItemIcon>
                   {option.icon}
                 </ListItemIcon>
@@ -210,4 +180,4 @@ export function SubmitPanel(props) {
 
 }
 
-export default withStyles(styles)(SubmitPanel);
+export default SubmitPanel;

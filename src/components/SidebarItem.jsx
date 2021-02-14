@@ -11,7 +11,7 @@ export function SidebarItem(props) {
   const [open, setOpen] = React.useState(false);
 
   function handleClick(event, value) {
-    setOpen(open => !open);
+    setOpen(!open);
   }
 
   return (

@@ -26,46 +26,12 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
-const styles = theme => ({
-  grid: {
-    flexGrow: 1,
-  },
-  navbarButton: {
-    color: 'white',
-    paddingRight: 10,
-    marginRight: 10,
-  },
-  buttonText: {
-    paddingLeft: 10,
-  },
-  listItem: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: 24
-  },
-  list: {
-    minWidth: 500,
-  },
-});
 
 export function AdminPanel(props) {
-  const { classes } = props;
-  const [open, setOpen] = React.useState(false)
-
-  function handleModalOpen() {
-    setOpen(open => true);
-  }
-
-  function handleModalClose() {
-    setOpen(open => false);
-  }
+  const { classes, open, handleModalClose } = props;
 
   return (
     <React.Fragment>
-      <ListItem button key='admin' className={classes.listItem} onClick={handleModalOpen}>
-        <ListItemIcon><BuildIcon /></ListItemIcon>
-        <ListItemText className={classes.listItemLabel}>Admin</ListItemText>
-      </ListItem>
       <Dialog
         className={classes.modal}
         open={open}
@@ -132,4 +98,4 @@ export function AdminPanel(props) {
 
 }
 
-export default withStyles(styles)(AdminPanel);
+export default AdminPanel;

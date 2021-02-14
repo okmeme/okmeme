@@ -35,12 +35,16 @@ import PhotoIcon from '@material-ui/icons/Photo';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ChatIcon from '@material-ui/icons/Chat';
+import SecurityIcon from '@material-ui/icons/Security';
 
 import LinkCard from './components/LinkCard';
 import SidebarItem from './components/SidebarItem';
-import SubmitPanel from './components/SubmitPanel';
-import LoginPanel from './components/LoginPanel';
-import AdminPanel from './components/AdminPanel';
+import LoginNavbar from './components/LoginNavbar';
+import LoginSidebar from './components/LoginSidebar';
+import AdminNavbar from './components/AdminNavbar';
+import AdminSidebar from './components/AdminSidebar';
+import SubmitNavbar from './components/SubmitNavbar';
+import SubmitSidebar from './components/SubmitSidebar';
 
 const drawerWidth = 240;
 
@@ -174,6 +178,15 @@ const styles = theme => ({
     height: window.innerHeight,
     maxHeight: window.innerHeight,
   },
+  selector: {
+    '& .MuiSelect-root': {
+      flex: 1,
+      alignItems: 'left'
+    }
+  },
+  list: {
+    minWidth: 500,
+  },
 });
 
 const theme = createMuiTheme({
@@ -246,6 +259,10 @@ const extraButtons = [
   {
     name: 'Login',
     icon: <InputIcon />
+  },
+  {
+    name: 'Admin',
+    icon: <SecurityIcon />
   }
 ]
 
@@ -277,7 +294,7 @@ export function App(props) {
   const [open, setOpen] = React.useState(true);
 
   function handleDrawer(event, value) {
-    setOpen(open => !open)
+    setOpen(!open)
   }
   
   return(
@@ -300,12 +317,13 @@ export function App(props) {
                         })}>
               <MenuIcon/>
             </IconButton>
-            <Typography className={classes.barTitle} variant='h4'>OKMEME</Typography>
+            <Typography className={classes.barTitle} variant='h4'>OKMEME!</Typography>
 
             <div className={classes.grow}></div>
             <Hidden smDown>
-              <SubmitPanel categoryTypes={categoryTypes} mediaTypes={mediaTypes}/>
-              <LoginPanel/>
+              <AdminNavbar classes={classes} extraButtons={extraButtons} />
+              <SubmitNavbar classes={classes} mediaTypes={mediaTypes} extraButtons={extraButtons} />
+              <LoginNavbar classes={classes} extraButtons={extraButtons}/>
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -346,28 +364,31 @@ export function App(props) {
             <SidebarItem classes={classes} item={categoryTypes[9]} tags={['Deals', 'Parts']} />
             <SidebarItem classes={classes} item={categoryTypes[10]} tags={['Recipes', 'Videos']} />
             <SidebarItem classes={classes} item={categoryTypes[11]} tags={['.jpg', '.gif', '.mp4']} />
-            <Hidden smUp>
+            <Hidden mdUp>
               {/* TODO FIGURE OUT WHY THIS DOESN'T WORK */}
               <Divider/>
-              <SidebarItem classes={classes} item={extraButtons[0]} />
-              <SidebarItem classes={classes} item={extraButtons[1]} />
+              <SubmitSidebar classes={classes} mediaTypes={mediaTypes} extraButtons={extraButtons} />
+              <LoginSidebar classes={classes} extraButtons={extraButtons} />
+              
+              {/* hide if not staff */}
+              <Divider/>  
+              <AdminSidebar classes={classes} extraButtons={extraButtons} />
             </Hidden>
-            {/* hide if not staff */}
-            <Divider/>
-            <AdminPanel />
+            
+            
           </List>
 
         </Drawer>
         <main className={classes.content}>
           <List className={classes.cardList}>
-            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='12' timestamp='1553239282400' Icon={CakeIcon} title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='23' link='https://okme.me' timestamp='1553238236670' Icon={MusicNoteIcon} title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' Icon={CameraAltIcon} title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='0' link='#' timestamp='1553238236670' Icon={KeyboardIcon} title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' Icon={ShoppingCartIcon} title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='42' media='' link='#' timestamp='1551038236670' Icon={KeyboardIcon} title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='42' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='42' link='#' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='12' link='#' timestamp='1553239282400' title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='23' link='https://okme.me' timestamp='1553238236670' title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='0' link='#' timestamp='1553238236670' title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[2]} points='42' media='' link='https://soundcloud.com/majorleaguewobs/hamster-dance-trap-remix' timestamp='1551038236670' title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='42' link='#' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
+            <LinkCard classes={classes} mediaType={mediaTypes[1]} points='42' link='https://www.youtube.com/watch?v=RM4IjR3DtrQ' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
 
           </List>
 
