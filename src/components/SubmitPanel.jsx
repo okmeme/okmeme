@@ -26,10 +26,10 @@ export function SubmitPanel(props) {
   const { classes, handleModalClose, open, mediaTypes, linkType, tags, url, text, nsfw } = props;
 
   // const [open, setOpen] = React.useState(false)
-  const [mediaType, setMediaType] = React.useState(mediaTypes[3].name)
+  const [mediaType, setMediaType] = React.useState('url')
 
-  function handleMediaType(event, value) {
-    setMediaType(value);
+  function handleMediaType(event) {
+    setMediaType(event.target.value);
   }
 
   return (
@@ -59,12 +59,12 @@ export function SubmitPanel(props) {
             helperText="Select Media Type"
             margin="normal"
           >
-            {mediaTypes.map(option => (
-              <MenuItem key={option.name} value={option.name}>
+            {Object.keys(mediaTypes).map(option => (
+              <MenuItem key={option} value={option}>
                 <ListItemIcon>
-                  {option.icon}
+                  {mediaTypes[option]['icon']}
                 </ListItemIcon>
-                {option.name}
+                {mediaTypes[option]['name']}
               </MenuItem>
             ))}
           </TextField>

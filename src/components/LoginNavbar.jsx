@@ -6,7 +6,7 @@ import LoginPanel from './LoginPanel';
 export function LoginNavbar(props) {
   const { classes, extraButtons } = props;
   const [open, setOpen] = React.useState(false);
-  const navbarIcon = extraButtons[1].icon;
+  const navbarIcon = extraButtons['login'].icon;
 
   function handleModalOpen() {
     setOpen(true);

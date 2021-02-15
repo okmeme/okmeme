@@ -9,7 +9,7 @@ import LoginPanel from './LoginPanel';
 export function LoginSIdebar(props) {
   const { classes, extraButtons } = props;
   const [open, setOpen] = React.useState(false);
-  const sidebarIcon = extraButtons[1].icon;
+  const sidebarIcon = extraButtons['login'].icon;
 
   function handleModalOpen() {
     setOpen(true);

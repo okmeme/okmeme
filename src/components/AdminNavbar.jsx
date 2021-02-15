@@ -7,7 +7,7 @@ import AdminPanel from './AdminPanel';
 export function AdminNavbar(props) {
   const { classes, extraButtons } = props;
   const [open, setOpen] = React.useState(false);
-  const navbarIcon = extraButtons[2].icon;
+  const navbarIcon = extraButtons['admin'].icon;
 
   function handleModalOpen() {
     setOpen(true);

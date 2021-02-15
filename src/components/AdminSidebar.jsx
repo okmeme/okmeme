@@ -9,7 +9,7 @@ import AdminPanel from './AdminPanel';
 export function AdminSidebar(props) {
   const { classes, extraButtons } = props;
   const [open, setOpen] = React.useState(false);
-  const sidebarIcon = extraButtons[2].icon;
+  const sidebarIcon = extraButtons['admin'].icon;
 
   function handleModalOpen() {
     setOpen(true);

@@ -7,7 +7,7 @@ import SubmitPanel from './SubmitPanel';
 export function SubmitNavbar(props) {
   const { classes, extraButtons, mediaTypes } = props;
   const [open, setOpen] = React.useState(false);
-  const navbarIcon = extraButtons[0].icon;
+  const navbarIcon = extraButtons['submit'].icon;
 
   function handleModalOpen() {
     setOpen(true);

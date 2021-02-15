@@ -9,7 +9,7 @@ import SubmitPanel from './SubmitPanel';
 export function SubmitSidebar(props) {
   const { classes, extraButtons, mediaTypes } = props;
   const [open, setOpen] = React.useState(false);
-  const sidebarIcon = extraButtons[0].icon;
+  const sidebarIcon = extraButtons['submit'].icon;
 
   function handleModalOpen() {
     setOpen(true);

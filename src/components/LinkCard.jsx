@@ -13,7 +13,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import ReportIcon from '@material-ui/icons/Report';
+
+import ReportPanel from './ReportPanel';
 
 function getHostname(url) {
   return new URL(url).host;
@@ -31,7 +32,7 @@ export function LinkCard(props) {
     setTextPreview(!textPreview);
   }
 
-  const { classes, mediaType, categoryType, media, link, title, tags, points, author, timestamp, text } = props;
+  const { classes, mediaType, mediaTypes, categoryType, media, link, title, tags, points, author, timestamp, text } = props;
 
   let shortLink = 'text';
   if (link !== '#') {
@@ -46,20 +47,19 @@ export function LinkCard(props) {
         <CardActionArea onClick={!text ? null : handleTextClick}>
           {link === '#' ?
             <CardContent>
-              <Typography variant="h5" component="h2">
-                {mediaType.icon}&nbsp;{title}
+              <Typography variant="h6">
+                {mediaTypes[mediaType]['icon']}&nbsp;{title}
               </Typography>
             </CardContent>
             :
             <CardContent>
-              <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
-                <Typography variant="h5" component="h2">
-                  {mediaType.icon}&nbsp;{title} <Typography variant="overline">{shortLink}</Typography>
-                </Typography>
-
-
-
-              </a>
+              <Tooltip title={link} placement='bottom-start'>
+                <a href={link} target='_blank' rel="noopener noreferrer" className={classes.link}>
+                  <Typography variant="h6">
+                    {mediaTypes[mediaType]['icon']}&nbsp;{title} <Typography variant="overline" className={classes.linkPreview}>{shortLink}</Typography>
+                  </Typography>
+                </a>
+              </Tooltip>
             </CardContent>
           }
           {!media ? null :
@@ -109,9 +109,7 @@ export function LinkCard(props) {
             </div>
           </Hidden>
           <div className={classes.grow}></div>
-          <Button size="small" color="primary">
-            <ReportIcon />
-          </Button>
+          <ReportPanel classes={classes} />
         </CardActions>
       </Card>
     </React.Fragment>

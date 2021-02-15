@@ -36,6 +36,8 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ChatIcon from '@material-ui/icons/Chat';
 import SecurityIcon from '@material-ui/icons/Security';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
+import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 import LinkCard from './components/LinkCard';
 import SidebarItem from './components/SidebarItem';
@@ -48,7 +50,16 @@ import SubmitSidebar from './components/SubmitSidebar';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#f57c00'
+    },
+    type: 'dark',
+  }
+});
+
+const styles = {
   root: {
     display: 'flex',
   },
@@ -135,12 +146,12 @@ const styles = theme => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
-
   label: {
     paddingLeft: 10,
   },
   cardList: {
     flex: '0 0 100%',
+    backgroundColor: theme.palette.background.default,
   },
   card: {
     flex: '0 0 100%',
@@ -161,8 +172,11 @@ const styles = theme => ({
     paddingLeft: theme.spacing(4)
   },
   link: {
-    color: 'black',
+    color: 'inherit',
     textDecoration: 'none',
+  },
+  linkPreview: {
+    color: theme.palette.text.secondary,
   },
   navbarButton: {
     color: 'white',
@@ -187,120 +201,113 @@ const styles = theme => ({
   list: {
     minWidth: 500,
   },
-});
+}
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-  },
-  palette: {
-    primary: {
-      main: '#f57c00'
-    },
-  }
-});
-
-const categoryTypes = [
-  {
+const categoryTypes = {
+  'all': {
     name: 'All',
     icon: <GradientIcon />
   },
-  {
+  'music': {
     name: 'Music',
     icon: <MusicNoteIcon />
   },
-  {
+  'videos': {
     name: 'Videos',
     icon: <MovieIcon />
   },
-  {
-    name: 'Pics',
+  'images': {
+    name: 'Images',
     icon: <CameraAltIcon />
   },
-  {
+  'games': {
     name: 'Games',
     icon: <VideogameAsset />
   },
-  {
+  'code': {
     name: 'Code',
     icon: <KeyboardIcon />
   },
-  {
+  'tech': {
     name: 'Tech',
     icon: <DevicesIcon />
   },
-  {
+  'cars': {
     name: 'Cars',
     icon: <DirectionsCarIcon />
   },
-  {
+  'outside': {
     name: 'Outside',
     icon: <PlaceIcon />
   },
-  {
+  'shopping': {
     name: 'Shopping',
     icon: <ShoppingCartIcon />
   },
-  {
+  'food': {
     name: 'Food',
     icon: <FastfoodIcon />
   },
-  {
+  'memes': {
     name: 'Memes',
     icon: <CakeIcon />
   },
-]
+}
 
-const extraButtons = [
-  {
+const extraButtons = {
+  'submit' : {
     name: 'Submit',
     icon: <AddBoxIcon />
   },
-  {
+  'login' : {
     name: 'Login',
     icon: <InputIcon />
   },
-  {
+  'admin': {
     name: 'Admin',
     icon: <SecurityIcon />
   }
-]
+}
 
-const mediaTypes = [
-  {
+const mediaTypes = {
+  'image': {
     name: 'Image',
     icon: <PhotoIcon />
   },
-  {
+  'video': {
     name: 'Video',
     icon: <MovieIcon />
-  }, {
+  },
+  'audio': {
     name: 'Audio',
     icon: <AudiotrackIcon />
   }, 
-  {
+  'url': {
     name: 'URL',
     icon: <OpenInNewIcon />
   },
-  {
+  'text': {
     name: 'Text',
     icon: <ChatIcon />
   }
-]
+}
 
 export function App(props) {
+
   const {classes} = props;
 
   const [open, setOpen] = React.useState(true);
 
   function handleDrawer(event, value) {
-    setOpen(!open)
+    setOpen(!open);
   }
+
+  // const themeIcon = !theme ? <Brightness7Icon /> : <Brightness3Icon /> 
   
   return(
-    <div className={classes.root}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline/>
-      <MuiThemeProvider theme={theme}>
+      <div className={classes.root}>
         <AppBar position="fixed" className={classNames(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
@@ -320,6 +327,11 @@ export function App(props) {
             <Typography className={classes.barTitle} variant='h4'>OKMEME!</Typography>
 
             <div className={classes.grow}></div>
+            {/* TODO toggle for light mode */}
+            {/* <IconButton onClick={handleTheme}>
+              {themeIcon}
+            </IconButton> */}
+            
             <Hidden smDown>
               <AdminNavbar classes={classes} extraButtons={extraButtons} />
               <SubmitNavbar classes={classes} mediaTypes={mediaTypes} extraButtons={extraButtons} />
@@ -351,19 +363,19 @@ export function App(props) {
             </List>
           </div>
           <List>
-            <SidebarItem classes={classes} item={categoryTypes[0]} />
+            <SidebarItem classes={classes} item={categoryTypes['all']} />
             <Divider/>
-            <SidebarItem classes={classes} item={categoryTypes[1]} tags={['Electronic', 'Chill', 'Classical', 'Rock']} />
-            <SidebarItem classes={classes} item={categoryTypes[2]} tags={['YouTube', 'GFY', 'Other']} />
-            <SidebarItem classes={classes} item={categoryTypes[3]} tags={['Imgur', 'Art', 'Instagram']} />
-            <SidebarItem classes={classes} item={categoryTypes[4]} tags={['PC', 'XBOX', 'PlayStation', 'Nintendo', 'Mobile']} />
-            <SidebarItem classes={classes} item={categoryTypes[5]} tags={['Web', 'Python', 'Games']} />
-            <SidebarItem classes={classes} item={categoryTypes[6]} tags={['Computers', 'Phones', 'Gadgets', 'Wearables']} />
-            <SidebarItem classes={classes} item={categoryTypes[7]} tags={['Four Wheels', 'Two Wheels']} />
-            <SidebarItem classes={classes} item={categoryTypes[8]} tags={['Camp', 'Hike', 'Run']} />
-            <SidebarItem classes={classes} item={categoryTypes[9]} tags={['Deals', 'Parts']} />
-            <SidebarItem classes={classes} item={categoryTypes[10]} tags={['Recipes', 'Videos']} />
-            <SidebarItem classes={classes} item={categoryTypes[11]} tags={['.jpg', '.gif', '.mp4']} />
+            <SidebarItem classes={classes} item={categoryTypes['music']} tags={['Electronic', 'Chill', 'Classical', 'Rock']} />
+            <SidebarItem classes={classes} item={categoryTypes['videos']} tags={['YouTube', 'GFY', 'Other']} />
+            <SidebarItem classes={classes} item={categoryTypes['images']} tags={['Imgur', 'Art', 'Instagram']} />
+            <SidebarItem classes={classes} item={categoryTypes['games']} tags={['PC', 'XBOX', 'PlayStation', 'Nintendo', 'Mobile']} />
+            <SidebarItem classes={classes} item={categoryTypes['code']} tags={['Web', 'Python', 'Games']} />
+            <SidebarItem classes={classes} item={categoryTypes['tech']} tags={['Computers', 'Phones', 'Gadgets', 'Wearables']} />
+            <SidebarItem classes={classes} item={categoryTypes['cars']} tags={['Four Wheels', 'Two Wheels']} />
+            <SidebarItem classes={classes} item={categoryTypes['outside']} tags={['Camp', 'Hike', 'Run']} />
+            <SidebarItem classes={classes} item={categoryTypes['shopping']} tags={['Deals', 'Parts']} />
+            <SidebarItem classes={classes} item={categoryTypes['food']} tags={['Recipes', 'Videos']} />
+            <SidebarItem classes={classes} item={categoryTypes['memes']} tags={['.jpg', '.gif', '.mp4']} />
             <Hidden mdUp>
               {/* TODO FIGURE OUT WHY THIS DOESN'T WORK */}
               <Divider/>
@@ -379,22 +391,20 @@ export function App(props) {
           </List>
 
         </Drawer>
-        <main className={classes.content}>
+        <div className={classes.content} color='default'>
           <List className={classes.cardList}>
-            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='12' link='#' timestamp='1553239282400' title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='23' link='https://okme.me' timestamp='1553238236670' title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[3]} points='0' link='#' timestamp='1553238236670' title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[0]} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[2]} points='42' media='' link='https://soundcloud.com/majorleaguewobs/hamster-dance-trap-remix' timestamp='1551038236670' title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[4]} points='42' link='#' timestamp='1553238236670' Icon={MovieIcon} title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
-            <LinkCard classes={classes} mediaType={mediaTypes[1]} points='42' link='https://www.youtube.com/watch?v=RM4IjR3DtrQ' timestamp='1553238236670' Icon={PlaceIcon} title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
-
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'text'} points='12' link='#' timestamp='1553239282400' title='lizard really long text title asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf qwerty qwerty qwerty' tags={['a', 'b', 'c']} author='bob'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'url'} points='23' link='https://okme.me' timestamp='1553238236670' title='asdf asdf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'image'} points='69' media='https://i.redd.it/piutnnjg3en21.png' link='https://i.redd.it/piutnnjg3en21.png' timestamp='1553238236670' title='satiscraftory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'text'} points='0' link='#' timestamp='1553238236670' title='asdf sddf' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'image'} points='42' media='https://i.redd.it/piutnnjg3en21.png' link='https://reddit.com/r/satisfactorygame' timestamp='1553238236670' title='satsifacredditory' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'audio'} points='42' media='' link='https://soundcloud.com/majorleaguewobs/hamster-dance-trap-remix' timestamp='1551038236670' title='asdf a' tags={['aas', 'basdf', 'casdf']} author='joe'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'text'} points='42' link='#' timestamp='1553238236670' title='asdf' tags={['aas', 'basdf', 'casdf']} author='joe' text='this is self text now boiz aslkdjf ajskfk fskld ajljfklajshfja hjkdfhsfhjks kdsajlf jdskl fjash fjkdhsjkafhajkshfjkdhsjka hfsdjkh fjkasdhfjksdhkaflhsdjklh asjkfh asdjkh fjkash kfjldhskja hfsdjkl hfjkasdh jkl hjkh fjkds ajkh s akljdfklsjkf akfdkl klajfkajfkdjkfjskl akl fklsdjklf askf sdkl jfsdjfklfj sdajfklaj fklsd fklsd flsd klsda fklj'/>
+            <LinkCard classes={classes} mediaTypes={mediaTypes} mediaType={'video'} points='42' link='https://www.youtube.com/watch?v=RM4IjR3DtrQ' timestamp='1553238236670' title='asdfaaasss' tags={['aas', 'basdf', 'casdf']} author='joe'/>
           </List>
-
-        </main>
-      </MuiThemeProvider>
-    </div>
+        </div>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
